@@ -1,124 +1,76 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<time.h>
+#define MAX_INPUT 1000
 
-//ÅÅĞò£¬²ÉÓÃÃ°ÅİÅÅĞò·¨
-void Sort(int Dest[], int Count)
+void main()
 {
-	int Inner_Count = 0;
-	int Out_Count = 0;
-	int tmp = 0;
-	int ExChange = 0;   //½»»»±ê¼Ç£¬Îª0±íÊ¾Î´·¢Éú½»»»£¬Îª1±íÊ¾·¢Éú½»»»£¬Ä¬ÈÏÎª0£¬±íÊ¾Î´·¢Éú½»»»
+    int Count = 0;
+    int Input_Array[MAX_INPUT] = {0};
+    int Output_Array[MAX_INPUT] = {0};
+    int Rand_Number = 0;
+    void Sort(int *Dest, int Max);
+    void Delete_Repeat(int *Source, int Max, int *Dest);
+    /*
+    ***è¾“å…¥éœ€è¦è¯»å…¥çš„éšæœºæ•°çš„ä¸ªæ•°,å¦‚æœå¤§äº1000åˆ™ç›´æ¥é€€å‡º***
+    */
+    scanf("%d", &Rand_Number);
+    if(Rand_Number > MAX_INPUT)
+        exit(1);
+    
+    for(Count = 0; Count < Rand_Number; Count++)
+    {
+        scanf("%d", &Input_Array[Count]);
+        printf("\n");
+    }
 
-	for(Out_Count = 0; Out_Count < Count - 1; Out_Count++)
-	{
-		ExChange = 0;
-		for (Inner_Count = 0; Inner_Count < Count - 1 - Out_Count; Inner_Count++)
-		{
-			if (Dest[Inner_Count] > Dest[Inner_Count + 1])
-			{
-				tmp = Dest[Inner_Count + 1];
-				Dest[Inner_Count + 1] = Dest[Inner_Count];
-				Dest[Inner_Count] = tmp;
-				ExChange = 1;
-			}
-		}
-		if(ExChange == 0)
-		{
-			break;
-		}
-	}
+    Sort(Input_Array, Rand_Number);
+    Delete_Repeat(Input_Array, Rand_Number, Output_Array);
+
+    for(Count = 0; Count < Rand_Number; Count++)
+    {
+	if(Output_Array[Count] == 1)
+        	printf("%d\n", Count);
+    }
 }
 
-//È¥ÖØ
-int Del_Repeat(int Dest[], int Count)
+/*
+***é‡‡ç”¨å†’æ³¡æ’åºæ³•è¿›è¡Œæ’åº***
+*/
+void Sort(int *Dest, int Max)
 {
-	int Inner_Count = 0;
-	int Out_Count = 0;
-	int After_Count = Count;
-	int Repeat_Count = 0;
-	int Repeat_Number[] = {0};
-	int Mid_Count = 0;
+    int Inner_Count = 0;
+    int Out_Count = 0;
+    int Exchange = 0;   //ç½®æ¢æ ‡è®°ï¼Œå¦‚æœå‘ç”Ÿäº†äº¤æ¢åˆ™ç½®1ï¼Œæœªå‘ç”Ÿäº¤æ¢åˆ™ç½®0ï¼Œé»˜è®¤æœªå‘ç”Ÿäº¤æ¢ã€‚ä¸€è¶Ÿæ’åºæœªå‘ç”Ÿäº¤æ¢è¡¨æ˜æ’åºå·²å®Œæˆã€‚
+    int tmp = 0;
 
-	printf("ÖØ¸´µÄÊı×ÖÓĞ£º");
-	for(Out_Count = 0; Out_Count < Count - 1; Out_Count++)
-	{
-		for(Inner_Count = Out_Count + 1; Inner_Count < Count - 1 - Out_Count; Inner_Count++)
-		{
-			if (Dest[Inner_Count] == Dest[Out_Count])
-			{
-				printf("%d\t", Dest[Inner_Count]);
-				Mid_Count = Inner_Count;
-				for (Mid_Count; Mid_Count < Count - 1; Mid_Count++)
-				{
-					Dest[Mid_Count] = Dest[Mid_Count + 1];
-				}
-				After_Count--;
-			}
-		}
-	}
+    for (Out_Count = 0; Out_Count < Max; Out_Count++)
+    {
+        for(Inner_Count = 0; Inner_Count < Max - Out_Count - 1; Inner_Count++)
+        {
+            if(Dest[Inner_Count] > Dest[Inner_Count + 1])
+            {
+                tmp = Dest[Inner_Count];
+                Dest[Inner_Count] = Dest[Inner_Count + 1];
+                Dest[Inner_Count + 1] = tmp;
+                
+                Exchange = 1;
+            }
+        }
 
-	printf("\n");
-
-	return After_Count;
+        if(Exchange == 0)
+            break;
+    }
 }
 
-int main()
+/*
+***å»é™¤é‡å¤æ•°å­—***
+*/
+void Delete_Repeat(int *Source, int Max, int *Dest)
 {
-	srand((unsigned)time(NULL));
-	int Array_Element_Number = 0;
-	int *Array = NULL;
-	int Count = 0;
-	int Array_Count = 0;
+    int Count = 0;
 
-	printf("ÇëÊäÈëÒªÉú³ÉµÄËæ»úÊı¸öÊı£º");
-	scanf("%d", &Array_Element_Number);
-	printf("\n");
-
-	Array = (int*)malloc(Array_Element_Number * sizeof(int));
-	if (!Array)
-	{
-		printf("ÄÚ´æ·ÖÅäÊ§°Ü£¬³ÌĞòÒì³£ÍË³ö£¡");
-		return -1;
-	}
-
-	for(Count = 0; Count < Array_Element_Number; Count++)
-	{
-		*(Array + Count) = rand() % 1000 + 1;;
-	}
-
-	printf("Êä³öÔ­Êı×é£º\n");
-	for (Count = 0; Count < Array_Element_Number;)
-	{
-		printf("%d\t", *(Array + Count));
-		Count++;
-		if (Count % 10 == 0)
-			printf("\n");
-	}
-	printf("\n");
-
-	Sort(Array, Array_Element_Number);
-	printf("Êä³öÅÅĞòºóµÄÊı×é£º\n");
-	for (Count = 0; Count < Array_Element_Number;)
-	{
-		printf("%d\t", *(Array + Count));
-		Count++;
-		if (Count % 10 == 0)
-			printf("\n");
-	}
-	printf("\n");
-
-	Array_Count = Del_Repeat(Array, Array_Element_Number);
-	printf("Êä³öÅÅĞòÈ¥ÖØºóµÄÊı×é£º\n");
-	for(Count = 0; Count < Array_Count;)
-	{
-		printf("%d\t", *(Array + Count));
-		Count++;
-		if (Count % 10 == 0)
-			printf("\n");
-	}
-
-	printf("\n");
-
-	return 0;
+    for(Count = 0; Count < Max; Count++)
+    {
+        Dest[Source[Count]] = 1;
+    }
 }
