@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #define MAX_INPUT 1000
 
-void main()
+int main()
 {
     int Count = 0;
     int Input_Array[MAX_INPUT] = {0};
@@ -31,6 +31,8 @@ void main()
 	if(Output_Array[Count] == 1)
         	printf("%d\n", Count);
     }
+
+    return 0;
 }
 
 /*
