@@ -1,78 +1,35 @@
+/*
+***明明想在学校中请一些同学一起做一项问卷
+***调查，为了实验的客观性，他先用计算机生
+***成了N个1到1000之间的随机整数（N≤1000），
+***对于其中重复的数字，只保留一个，把其余
+***相同的数去掉，不同的数对应着不同的学生
+***的学号。然后再把这些数从小到大排序，按
+***照排好的顺序去找同学做调查。请你协助明
+***明完成“去重”与“排序”的工作(同一个测试
+***用例里可能会有多组数据，希望大家能正确
+***处理)。
+*/
 #include<stdio.h>
-#include<stdlib.h>
-#define MAX_INPUT 1000
 
 int main()
 {
-    int Count = 0;
-    int Input_Array[MAX_INPUT] = {0};
-    int Output_Array[MAX_INPUT] = {0};
-    int Rand_Number = 0;
-    void Sort(int *Dest, int Max);
-    void Delete_Repeat(int *Source, int Max, int *Dest);
-    /*
-    ***输入需要读入的随机数的个数,如果大于1000则直接退出***
-    */
-    scanf("%d", &Rand_Number);
-    if(Rand_Number > MAX_INPUT)
-        exit(1);
+    int Rand_Number;
+    int Input_Array[1001];
+    int Count, Num;
     
-    for(Count = 0; Count < Rand_Number; Count++)
+    while(scanf("%d",&Rand_Number)!=EOF)
     {
-        scanf("%d", &Input_Array[Count]);
-        printf("\n");
-    }
-
-    Sort(Input_Array, Rand_Number);
-    Delete_Repeat(Input_Array, Rand_Number, Output_Array);
-
-    for(Count = 0; Count < Rand_Number; Count++)
-    {
-	if(Output_Array[Count] == 1)
-        	printf("%d\n", Count);
-    }
-
-    return 0;
-}
-
-/*
-***采用冒泡排序法进行排序***
-*/
-void Sort(int *Dest, int Max)
-{
-    int Inner_Count = 0;
-    int Out_Count = 0;
-    int Exchange = 0;   //置换标记，如果发生了交换则置1，未发生交换则置0，默认未发生交换。一趟排序未发生交换表明排序已完成。
-    int tmp = 0;
-
-    for (Out_Count = 0; Out_Count < Max; Out_Count++)
-    {
-        for(Inner_Count = 0; Inner_Count < Max - Out_Count - 1; Inner_Count++)
+        for(Count=0;Count<1001;Count++)
+            Input_Array[Count]=0;
+        while(Rand_Number--)
         {
-            if(Dest[Inner_Count] > Dest[Inner_Count + 1])
-            {
-                tmp = Dest[Inner_Count];
-                Dest[Inner_Count] = Dest[Inner_Count + 1];
-                Dest[Inner_Count + 1] = tmp;
-                
-                Exchange = 1;
-            }
+            scanf("%d",&Num);
+            Input_Array[Num]++;
         }
-
-        if(Exchange == 0)
-            break;
+        for(Count=0; Count<1001; Count++)
+            if(Input_Array[Count]!=0)
+                printf("%d\n",Count);
     }
-}
-
-/*
-***去除重复数字***
-*/
-void Delete_Repeat(int *Source, int Max, int *Dest)
-{
-    int Count = 0;
-
-    for(Count = 0; Count < Max; Count++)
-    {
-        Dest[Source[Count]] = 1;
-    }
+    return 0;
 }
