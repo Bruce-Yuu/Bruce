@@ -1,9 +1,12 @@
+/*
+***è®¡ç®—å­—ç¬¦ä¸²æœ€åä¸€ä¸ªå•è¯çš„é•¿åº¦ï¼Œå•è¯ä»¥ç©ºæ ¼éš”å¼€ã€‚
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #define MAX_LEN 5000
 
-//¶ÁÈ¡µ¥´Ê
+//è¯»å…¥å­—ç¬¦ä¸²
 int Read(char Dest[])
 {
 	int Count = 0;
@@ -16,7 +19,7 @@ int Read(char Dest[])
 	return Count - 1;
 }
 
-//¼ÆËã×îºóÒ»¸öµ¥´Ê³¤¶È
+//è®¡ç®—æœ€åä¸€ä¸ªå•è¯é•¿åº¦
 int Cal_Length_Of_Last_Word(char Source[], int Max)
 {
 	int Count = Max;

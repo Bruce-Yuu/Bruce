@@ -1,3 +1,7 @@
+/*
+***连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
+***长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。
+*/
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -40,11 +44,6 @@ int Read_String(int *String)
 
     while(Count < MAX_INPUT && (*(String + Count) = getchar()) != EOF && *(String + Count) != '\n')
     {
-        #if 0
-        if(*(String + Count) == '\n')
-            ;
-        else
-        #endif
             Count++;
         
     }
